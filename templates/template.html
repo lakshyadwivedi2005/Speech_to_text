@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Service Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; text-align: center; }
+        #chatbox { width: 400px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+        #messages { height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; text-align: left; }
+        .user { color: blue; margin: 5px 0; }
+        .bot { color: green; margin: 5px 0; }
+        input { width: 80%; padding: 8px; }
+        button { padding: 8px 12px; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>Customer Service Chatbot</h2>
+        <div id="messages"></div>
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById("userInput");
+            const message = input.value;
+            if (message.trim() === "") return;
+
+            // Display user message
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML += `<div class='user'><b>You:</b> ${message}</div>`;
+
+            // Send to Flask backend
+            const response = await fetch("/get", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+            messagesDiv.innerHTML += `<div class='bot'><b>Bot:</b> ${data.response}</div>`;
+
+            // Clear input and auto-scroll
+            input.value = "";
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
