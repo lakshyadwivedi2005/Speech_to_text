@@ -5,19 +5,19 @@ def transcribe_from_microphone():
     recognizer = sr.Recognizer()
 
     with sr.Microphone() as source:
-        print("🎤 Speak something... (press Ctrl+C to stop)")
+        print(" Speak something... (press Ctrl+C to stop)")
         recognizer.adjust_for_ambient_noise(source)  # Reduce background noise
         audio = recognizer.listen(source)
 
     try:
         text = recognizer.recognize_google(audio)
-        print("\n✅ Transcription:")
+        print("\n Transcription:")
         print(text)
         save_transcription(text)
     except sr.UnknownValueError:
-        print("❌ Could not understand the audio.")
+        print(" Could not understand the audio.")
     except sr.RequestError:
-        print("⚠️ Could not connect to the service. Check internet connection.")
+        print(" Could not connect to the service. Check internet connection.")
 
 def transcribe_from_file(audio_file):
     recognizer = sr.Recognizer()
@@ -29,18 +29,18 @@ def transcribe_from_file(audio_file):
 
     try:
         text = recognizer.recognize_google(audio)
-        print("\n✅ Transcription:")
+        print("\n Transcription:")
         print(text)
         save_transcription(text)
     except sr.UnknownValueError:
-        print("❌ Could not understand the audio.")
+        print(" Could not understand the audio.")
     except sr.RequestError:
-        print("⚠️ Could not connect to the service. Check internet connection.")
+        print(" Could not connect to the service. Check internet connection.")
 
 def save_transcription(text, filename="transcription.txt"):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(text)
-    print(f"💾 Transcription saved to {filename}")
+    print(f" Transcription saved to {filename}")
 
 if __name__ == "__main__":
     print("====== Speech-to-Text Tool ======")
@@ -55,6 +55,6 @@ if __name__ == "__main__":
         if os.path.exists(file_path):
             transcribe_from_file(file_path)
         else:
-            print("❌ File not found. Please check the path.")
+            print(" File not found. Please check the path.")
     else:
         print("Invalid choice!")
