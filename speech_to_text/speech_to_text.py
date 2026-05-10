@@ -5,9 +5,15 @@ def transcribe_from_microphone():
     recognizer = sr.Recognizer()
 
     with sr.Microphone() as source:
+<<<<<<< HEAD
         print(" Speak something... (press Ctrl+C to stop)")
         recognizer.adjust_for_ambient_noise(source)  # Reduce background noise
         audio = recognizer.listen(source)
+=======
+        print(" Speak something...")
+        recognizer.adjust_for_ambient_noise(source)
+        audio = recognizer.listen(source, timeout=5, phrase_time_limit=10)
+>>>>>>> 301a7ce (Updated speech to text project)
 
     try:
         text = recognizer.recognize_google(audio)
@@ -23,7 +29,7 @@ def transcribe_from_file(audio_file):
     recognizer = sr.Recognizer()
 
     with sr.AudioFile(audio_file) as source:
-        print("🔊 Processing audio file...")
+        print(" Processing audio file...")
         audio = recognizer.listen(source, timeout=5, phrase_time_limit=10)
 
 
@@ -35,7 +41,11 @@ def transcribe_from_file(audio_file):
     except sr.UnknownValueError:
         print(" Could not understand the audio.")
     except sr.RequestError:
+<<<<<<< HEAD
         print(" Could not connect to the service. Check internet connection.")
+=======
+        print("Could not connect to the service. Check internet connection.")
+>>>>>>> 301a7ce (Updated speech to text project)
 
 def save_transcription(text, filename="transcription.txt"):
     with open(filename, "w", encoding="utf-8") as f:
